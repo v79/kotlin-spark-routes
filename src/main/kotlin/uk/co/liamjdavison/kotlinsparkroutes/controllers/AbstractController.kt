@@ -17,6 +17,7 @@ abstract class AbstractController {
 	var session: Session? = null
 
 	init {
+
 		// put before and after filters here
 		before {
 			session  = request.session(true)
@@ -24,4 +25,5 @@ abstract class AbstractController {
 
 		notFound { "404 not found?" }
 	}
+
 }

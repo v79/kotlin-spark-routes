@@ -3,7 +3,7 @@ package uk.co.liamjdavison.kotlinsparkroutes.controllers
 import spark.ModelAndView
 import spark.kotlin.get
 import spark.kotlin.post
-
+import uk.co.liamjdavison.kotlinsparkroutes.annotations.SparkController
 /**
  * Created by Liam Davison on 17/06/2017.
  */
@@ -13,7 +13,7 @@ data class User(val name: String, val age: Int)
 /**
  * Controller for users. Responds to requests under the /users/ path
  */
-@uk.co.liamjdavison.kotlinsparkroutes.annotations.SparkController
+@SparkController
 class UserController : AbstractController() {
 
 	val users: MutableList<User> = mutableListOf()

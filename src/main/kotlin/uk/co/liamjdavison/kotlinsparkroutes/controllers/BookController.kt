@@ -15,7 +15,7 @@ class BookController : AbstractController() {
 			"here be books"
 		}
 
-		get("/books/new") {
+		get( "/books/new") {
 			"create new book"
 		}
 	}
