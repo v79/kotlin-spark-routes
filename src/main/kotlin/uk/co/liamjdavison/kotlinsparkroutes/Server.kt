@@ -10,7 +10,6 @@ import spark.kotlin.port
 import spark.kotlin.staticFiles
 import spark.servlet.SparkApplication
 import uk.co.liamjdavison.annotations.SparkController
-import uk.co.ljd.ksparkmvc.annotations.KSparkApplication
 import java.util.*
 
 /**
@@ -18,7 +17,6 @@ import java.util.*
  * The server port number defaults to 4567; to change it, set the JAVA environment variable server.port (e.g. -Dserver.port=8000).
  * Individual controllers are responsible for their own routes.
  */
-@KSparkApplication
 class Server : SparkApplication {
 	val logger = LoggerFactory.getLogger(Server::class.java)
 	val thisPackage = this.javaClass.`package`
