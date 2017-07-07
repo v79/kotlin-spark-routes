@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>List of Users</title>
+</head>
+<body>
+<h1>All Users</h1>
+<ul th:each="u : ${users}">
+    <li th:text="${u.name}+' ' + ${u.age}">Bob 25</li>
+</ul>
+<h2>Add User</h2>
+<form id="addUser" action="/users/add-submit" method="post">
+    <label for="addUser-name">Name</label>
+    <input id="addUser-name" name="name" placeholder="Name">
+    <label for="addUser-age">Age</label>
+    <input id="addUser-age" name="age" placeholder="Age">
+    <button id="addUser-btn-add" type="submit">Add User</button>
+</form>
+
+<img src="Costa_rican_frog.jpg" title="Costa rican frog" width="200px"/>
+</body>
+</html>
