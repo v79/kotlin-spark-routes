@@ -22,6 +22,6 @@ abstract class AbstractController {
 			session  = request.session(true)
 		}
 
-		notFound { "not found?" }
+		notFound { "404 not found?" }
 	}
 }

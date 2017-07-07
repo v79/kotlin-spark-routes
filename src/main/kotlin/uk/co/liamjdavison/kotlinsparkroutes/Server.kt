@@ -9,7 +9,7 @@ import spark.kotlin.get
 import spark.kotlin.port
 import spark.kotlin.staticFiles
 import spark.servlet.SparkApplication
-import uk.co.liamjdavison.annotations.SparkController
+import uk.co.liamjdavison.kotlinsparkroutes.annotations.SparkController
 import java.util.*
 
 /**
