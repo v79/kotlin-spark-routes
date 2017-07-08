@@ -42,12 +42,6 @@ jar{
     from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
 }
 
-tasks {
-    'build' {
-        dependsOn(jar)
-    }
-}
-
 dependencies {
 
 //    compile "uk.co.ljd:ksparkmvc:$ksparkmvc_version"
@@ -64,6 +58,22 @@ dependencies {
     testCompile 'junit:junit:4.12'
 }
 
+//task stage {
+//    dependsOn 'build'
+//}
+
+//tasks {
+//    'build' {
+//        dependsOn(jar)
+//    }
+//    'stage' {
+//        dependsOn(build)
+//    }
+//}
+
+//task build {
+//    dependsOn(jar)
+//}
 task stage {
-    dependsOn 'build'
+    dependsOn(build)
 }
