@@ -32,7 +32,7 @@ apply plugin: 'kotlin'
 
 jar{
     baseName = 'kotlin-spark-routes'
-    version = '0.3'
+    version = '0.4'
     manifest {
         attributes(
             'Main-Class': 'uk.co.liamjdavison.kotlinsparkroutes.MainKt'
@@ -48,7 +48,6 @@ dependencies {
 //
 //    kapt "uk.co.ljd:ksparkmvc:$ksparkmvc_version"
 
-
     compile "org.jetbrains.kotlin:kotlin-stdlib-jre8:$kotlin_version"
     compile "com.sparkjava:spark-kotlin:$spark_kotlin_version"
     compile "org.thymeleaf:thymeleaf:$thymeleaf_version"
@@ -58,22 +57,6 @@ dependencies {
     testCompile 'junit:junit:4.12'
 }
 
-//task stage {
-//    dependsOn 'build'
-//}
-
-//tasks {
-//    'build' {
-//        dependsOn(jar)
-//    }
-//    'stage' {
-//        dependsOn(build)
-//    }
-//}
-
-//task build {
-//    dependsOn(jar)
-//}
 task stage {
     dependsOn(build)
 }

@@ -10,14 +10,17 @@ import uk.co.liamjdavison.ThymeleafEngine
  * Base class for all controllers. It defines a logger and the rendering engine, plus before and after filters,
  * notFound routes, and other common routes
  */
-abstract class AbstractController {
+abstract class AbstractController(path: String) {
 	open val logger = LoggerFactory.getLogger(AbstractController::class.java)
 	protected val engine: ThymeleafEngine = ThymeleafEngine()
 
 	var session: Session? = null
 
+	open lateinit var path: String
+
 	init {
 
+		this.path = path
 		// put before and after filters here
 		before {
 			session  = request.session(true)

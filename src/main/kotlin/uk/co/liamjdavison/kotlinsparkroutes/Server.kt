@@ -28,14 +28,17 @@ class Server : SparkApplication {
 		staticFiles.location("/public")
 
 		// initialize controllers
-		val reflections = Reflections(thisPackage.name, MethodAnnotationsScanner(), TypeAnnotationsScanner(), SubTypesScanner())
+		val reflections = Reflections(thisPackage.name, MethodAnnotationsScanner(), TypeAnnotationsScanner(), SubTypesScanner() )
 		val controllers = reflections.getTypesAnnotatedWith(SparkController::class.java)
-		controllers.forEach { it.newInstance() }
+		controllers.forEach {
+			logger.info("Instantiating controller " + it.simpleName)
+			it.newInstance()
+		}
 
 		displayStartupMessage()
 
 		get(path = "/") {
-			redirect(location = "/users")
+			redirect(location = "/users/")
 		}
 	}
 

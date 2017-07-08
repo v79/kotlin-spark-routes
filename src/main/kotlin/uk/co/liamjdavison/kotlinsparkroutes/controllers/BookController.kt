@@ -7,7 +7,7 @@ import uk.co.liamjdavison.kotlinsparkroutes.annotations.SparkController
  * Created by Liam Davison on 01/07/2017.
  */
 @SparkController
-class BookController : AbstractController() {
+class BookController : AbstractController("/books") {
 
 	init {
 
