@@ -7,7 +7,8 @@
 <body>
 <h1>All Users</h1>
 <ul th:each="u : ${users}">
-    <li th:text="${u.name}+' ' + ${u.age}">Bob 25</li>
+    <!--<li th:text="${u.name}+' ' + ${u.age}">Bob 25</li>-->
+    <li th:text="${u.prettyPrint()}">Bob 25</li>
 </ul>
 <h2>Add User</h2>
 <form id="addUser" action="/users/add-submit" method="post">
