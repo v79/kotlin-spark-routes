@@ -3,4 +3,14 @@ Playground for combining kotlin-spark, Thymleaf, custom annotations etc
 
 This is where I play around with Kotlin, kotlin-sparkjava, and other technologies. I'm hoping that this repository will at least compile, if not actually do anything useful.
 
-A running version of the app _may_ be found [hosted on Heroku](https://kotlin-spark-routes.herokuapp.com/users).
+A running version of the app _may_ be found [hosted on Heroku](https://kotlin-spark-routes.herokuapp.com/users/).
+
+## Goals and technologies:
+
+* HTTP server through [spark-kotlin](https://github.com/perwendel/spark-kotlin)
+* Page layouts and templating with [Thymeleaf](http://www.thymeleaf.org/); others supported by spark-kotlin may follow later
+* Dependency Injection framework - exploring [Kodein](https://github.com/SalomonBrys/Kodein), [Injekt](https://github.com/kohesive/injekt) and [Dagger 2](https://github.com/google/dagger)
+* Database handling and ORM - perhaps [requery](https://github.com/requery/requery), looking for alternatives which support MySQL/MariaDB/Postgresql
+* Reflection and annotation processing
+
+I'm avoiding all the traditional big hitters for Java - Spring Boot, Hibernate, JSF2, JSP - as I want to learn more about alternative approaches. I'd like to use as much Kotlin as possible, but I'm not dogmatic about it. Java libraries are allowed.
