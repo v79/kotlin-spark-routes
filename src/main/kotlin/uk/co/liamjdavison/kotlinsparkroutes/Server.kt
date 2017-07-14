@@ -28,7 +28,7 @@ class Server : SparkApplication {
 		staticFiles.location("/public")
 
 		// initialize controllers
-		val reflections = Reflections(thisPackage.name, MethodAnnotationsScanner(), TypeAnnotationsScanner(), SubTypesScanner() )
+		val reflections = Reflections(thisPackage.name, MethodAnnotationsScanner(), TypeAnnotationsScanner(), SubTypesScanner())
 		val controllers = reflections.getTypesAnnotatedWith(SparkController::class.java)
 		controllers.forEach {
 			logger.info("Instantiating controller " + it.simpleName)

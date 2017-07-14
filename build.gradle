@@ -11,6 +11,7 @@ buildscript {
     ext.spark_kotlin_version = '1.0.0-alpha'
     ext.ksparkmvc_version = '0.0.20-SNAPSHOT'
     ext.thymeleaf_version = '3.0.6.RELEASE'
+    ext.kodein_version = '4.0.0'
     repositories {
         mavenLocal()
         mavenCentral()
@@ -45,16 +46,17 @@ jar{
 dependencies {
 
 //    compile "uk.co.ljd:ksparkmvc:$ksparkmvc_version"
-//
 //    kapt "uk.co.ljd:ksparkmvc:$ksparkmvc_version"
 
     compile "org.jetbrains.kotlin:kotlin-stdlib-jre8:$kotlin_version"
     compile "com.sparkjava:spark-kotlin:$spark_kotlin_version"
     compile "org.thymeleaf:thymeleaf:$thymeleaf_version"
     compile "org.reflections:reflections:0.9.11"
+    compile "com.github.salomonbrys.kodein:kodein:$kodein_version"
     compile group: 'org.slf4j', name: 'slf4j-simple', version: '1.6.2'
 
     testCompile 'junit:junit:4.12'
+    testCompile "com.nhaarman:mockito-kotlin:1.5.0"
 }
 
 task stage {
