@@ -3,7 +3,7 @@ package uk.co.liamjdavison.kotlinsparkroutes.services.users
 import uk.co.liamjdavison.kotlinsparkroutes.model.User
 
 /**
- * Created by Liam Davison on 08/07/2017.
+ * The simplest implementation of UserService. All users are stored in a standard mutable list.
  */
 class InMemoryUserService : UserService {
 
@@ -15,14 +15,14 @@ class InMemoryUserService : UserService {
 	}
 
 	override fun getAllUsers(): List<User> {
-		if(userList == null) {
+		if (userList == null) {
 			userList = mutableListOf()
 		}
 		return userList
 	}
 
 	override fun addUser(user: User): Int {
-		if(userList == null) {
+		if (userList == null) {
 			userList = mutableListOf()
 		}
 		userList.add(user)
@@ -30,17 +30,17 @@ class InMemoryUserService : UserService {
 	}
 
 	override fun deleteUser(user: User): Boolean {
-		if(userList != null) {
+		if (userList != null) {
 			return userList.remove(user)
 		}
 		return false
 	}
 
-	override fun findUsers(name: String): List<User>? {
+	override fun findUsersByName(name: String): List<User>? {
 		var resultList: MutableList<User> = mutableListOf()
-		if(userList != null) {
-			for(u in userList) {
-				if (u.name.equals(name,false)) {
+		if (userList != null) {
+			for (u in userList) {
+				if (u.name.equals(name, false)) {
 					resultList.add(u)
 				}
 			}

@@ -7,12 +7,24 @@ import uk.co.liamjdavison.kotlinsparkroutes.model.User
  */
 interface UserService{
 
+	/**
+	 * Return a list of all the users
+	 */
 	fun getAllUsers(): List<User>
 
+	/**
+	 * Add the given user
+	 */
 	fun addUser(user: User): Int
 
+	/**
+	 * Remove the given user
+	 */
 	fun deleteUser(user: User): Boolean
 
-	fun findUsers(name: String): List<User>?
+	/**
+	 * Find all users which match the given name
+	 */
+	fun findUsersByName(name: String): List<User>?
 
 }
