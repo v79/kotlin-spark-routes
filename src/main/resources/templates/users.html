@@ -1,24 +1,57 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>List of Users</title>
+	<!--Import Google Icon Font-->
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+	<!--Import materialize.css-->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.99.0/css/materialize.min.css">
+	<!--Let browser know website is optimized for mobile-->
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+	<meta charset="UTF-8">
+	<title>List of Users</title>
 </head>
 <body>
-<h1>All Users</h1>
-<ul th:each="u : ${users}">
-    <!--<li th:text="${u.name}+' ' + ${u.age}">Bob 25</li>-->
-    <li th:text="${u.prettyPrint()}">Bob 25</li>
-</ul>
-<h2>Add User</h2>
-<form id="addUser" action="/users/add-submit" method="post">
-    <label for="addUser-name">Name</label>
-    <input id="addUser-name" name="name" placeholder="Name">
-    <label for="addUser-age">Age</label>
-    <input id="addUser-age" name="age" placeholder="Age">
-    <button id="addUser-btn-add" type="submit">Add User</button>
-</form>
-
-<img src="/Costa_rican_frog.jpg" title="Costa rican frog" width="200px"/>
+<!--Import jQuery before materialize.js-->
+<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.99.0/js/materialize.min.js"></script>
+<div class="container">
+	<div class="row">
+		<div class="col s12"><h2>All Users</h2></div>
+	</div>
+	<div class="row">
+		<ul class="collection">
+			<li th:each="u : ${users}" class="collection-item">
+				<div>
+					<span th:text="${u.prettyPrint()}" th:remove="tag"></span><a href="#!" class="secondary-content"><i
+						class="material-icons">delete</i></a>
+				</div>
+			</li>
+		</ul>
+	</div>
+	<div class="row">
+		<h3>Add User</h3>
+		<form id="addUser" action="/users/add-submit" method="post" class="col s12">
+			<div class="input-field col s5">
+				<label for="addUser-name">Name</label>
+				<input id="addUser-name" name="name" placeholder="Name" type="text">
+			</div>
+			<div class="input-field col s2">
+				<label for="addUser-age">Age</label>
+				<input id="addUser-age" name="age" placeholder="Age" class="input-field col s3" type="number">
+			</div>
+			<div class="input-field col s2 pull-s1">
+				<button id="addUser-btn-add" type="submit" class="btn waves-effect waves-light">Add User <i
+						class="material-icons right">send</i></button>
+			</div>
+		</form>
+	</div>
+	<div class="section">
+		<div class="row">
+			<div class="col s12"><img src="/Costa_rican_frog.jpg" title="Costa rican frog" width="200px"
+			                          class="z-depth-4"/></div>
+		</div>
+	</div>
+</div>
 </body>
 </html>
