@@ -1,5 +1,11 @@
 package uk.co.liamjdavison.kotlinsparkroutes
 
+import io.requery.meta.EntityModel
+import io.requery.sql.Configuration
+import io.requery.sql.ConfigurationBuilder
+import io.requery.sql.KotlinConfiguration
+import io.requery.sql.KotlinEntityDataStore
+import io.requery.sql.platform.H2
 import org.reflections.Reflections
 import org.reflections.scanners.MethodAnnotationsScanner
 import org.reflections.scanners.SubTypesScanner
@@ -11,6 +17,12 @@ import spark.kotlin.staticFiles
 import spark.servlet.SparkApplication
 import uk.co.liamjdavison.kotlinsparkroutes.annotations.SparkController
 import java.util.*
+import javax.sql.DataSource
+import javax.naming.InitialContext
+import org.h2.jdbcx.JdbcDataSource
+//import uk.co.liamjdavison.kotlinsparkroutes.db.model.Models
+
+
 
 /**
  * Root class representing our embedded Jetty SparkJava server. The server is initialised, and each controller is constructed.
@@ -20,6 +32,9 @@ import java.util.*
 class Server : SparkApplication {
 	val logger = LoggerFactory.getLogger(Server::class.java)
 	val thisPackage = this.javaClass.`package`
+
+
+
 
 	constructor(args: Array<String>) {
 		val portNumber: String? = System.getProperty("server.port")
@@ -34,6 +49,19 @@ class Server : SparkApplication {
 			logger.info("Instantiating controller " + it.simpleName)
 			it.newInstance()
 		}
+
+		val dataSource = getH2DataSource()
+		val configuration: Configuration = KotlinConfiguration(dataSource = dataSource, model = uk.co.liamjdavison.kotlinsparkroutes.db.model.Models.DEFAULT)
+		val data = KotlinEntityDataStore<>(configuration)
+
+
+
+
+
+
+
+
+
 
 		displayStartupMessage()
 
@@ -53,5 +81,17 @@ class Server : SparkApplication {
 		logger.info("OS: " + System.getProperty("os.name"))
 		logger.info("Port: " + port())
 		logger.info("=============================================================")
+	}
+
+	fun getH2DataSource(): DataSource {
+		val ds: JdbcDataSource = JdbcDataSource()
+		ds.url = "jdbc:h2:˜/test"
+		ds.user = "sa"
+		ds.password = "sa"
+		val ctx = InitialContext()
+		ctx.bind("jdbc/dsName", ds)
+
+		return ds
+
 	}
 }

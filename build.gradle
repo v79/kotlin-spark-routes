@@ -1,9 +1,10 @@
 group 'uk.co.liamjdavison'
-version '0.4-SNAPSHOT'
+version '0.5-SNAPSHOT'
 
 repositories {
     mavenLocal()
     mavenCentral()
+    jcenter()
 }
 
 buildscript {
@@ -24,7 +25,7 @@ buildscript {
 }
 
 apply plugin: 'kotlin'
-//apply plugin: 'kotlin-kapt'
+apply plugin: 'kotlin-kapt'
 //
 //kapt {
 //    generateStubs = true
@@ -33,7 +34,7 @@ apply plugin: 'kotlin'
 
 jar{
     baseName = 'kotlin-spark-routes'
-    version = '0.4'
+    version = '0.5'
     manifest {
         attributes(
             'Main-Class': 'uk.co.liamjdavison.kotlinsparkroutes.MainKt'
@@ -54,6 +55,12 @@ dependencies {
     compile "org.reflections:reflections:0.9.11"
     compile "com.github.salomonbrys.kodein:kodein:$kodein_version"
     compile group: 'org.slf4j', name: 'slf4j-simple', version: '1.6.2'
+
+    // database connections
+    compile 'com.h2database:h2:1.0.60'
+    compile 'io.requery:requery:1.4.0'
+    compile 'io.requery:requery-kotlin:1.4.0'
+    kapt 'io.requery:requery-processor:1.1.0'
 
     testCompile 'junit:junit:4.12'
     testCompile "com.nhaarman:mockito-kotlin:1.5.0"
