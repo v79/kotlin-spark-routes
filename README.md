@@ -12,6 +12,7 @@ A running version of the app _may_ be found [hosted on Heroku](https://kotlin-sp
 * Dependency Injection framework - exploring [Kodein](https://github.com/SalomonBrys/Kodein), [Injekt](https://github.com/kohesive/injekt) and [Dagger 2](https://github.com/google/dagger)
 * Database handling and ORM - perhaps [requery](https://github.com/requery/requery), looking for alternatives which support MySQL/MariaDB/Postgresql
 * Reflection and annotation processing
-* Unit testing with JUnit and nhaarman's Kotlin Mockito
+* Unit testing with JUnit and [nhaarman's Kotlin Mockito](https://github.com/nhaarman/mockito-kotlin)
+* Making it pretty through [Materializecss](https://github.com/Dogfalo/materialize)
 
 I'm avoiding all the traditional big hitters for Java - Spring Boot, Hibernate, JSF2, JSP - as I want to learn more about alternative approaches. I'd like to use as much Kotlin as possible, but I'm not dogmatic about it. Java libraries are allowed.
