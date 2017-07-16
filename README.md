@@ -11,6 +11,11 @@ A running version of the app _may_ be found [hosted on Heroku](https://kotlin-sp
 * Page layouts and templating with [Thymeleaf](http://www.thymeleaf.org/); others supported by spark-kotlin may follow later
 * Dependency Injection framework - exploring [Kodein](https://github.com/SalomonBrys/Kodein), [Injekt](https://github.com/kohesive/injekt) and [Dagger 2](https://github.com/google/dagger)
 * Database handling and ORM - perhaps [requery](https://github.com/requery/requery), looking for alternatives which support MySQL/MariaDB/Postgresql
+
+   > _Requery did not go well_ - the documentation is very Android focused. I haven't written direct JDBC code since, well, forever, and didn't even know how to set up a basic connection
+   
+   > I'd like to just use a SQLlite database, but they are not well supported on the Heroku platform
+
 * Reflection and annotation processing
 * Unit testing with JUnit and [nhaarman's Kotlin Mockito](https://github.com/nhaarman/mockito-kotlin)
 * Making it pretty through [Materializecss](https://github.com/Dogfalo/materialize)

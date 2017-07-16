@@ -1,10 +1,8 @@
 package uk.co.liamjdavison.kotlinsparkroutes
 
+import io.requery.Persistable
 import io.requery.meta.EntityModel
-import io.requery.sql.Configuration
-import io.requery.sql.ConfigurationBuilder
-import io.requery.sql.KotlinConfiguration
-import io.requery.sql.KotlinEntityDataStore
+import io.requery.meta.EntityModelBuilder
 import io.requery.sql.platform.H2
 import org.reflections.Reflections
 import org.reflections.scanners.MethodAnnotationsScanner
@@ -19,7 +17,19 @@ import uk.co.liamjdavison.kotlinsparkroutes.annotations.SparkController
 import java.util.*
 import javax.sql.DataSource
 import javax.naming.InitialContext
-import org.h2.jdbcx.JdbcDataSource
+import java.sql.Connection
+import java.sql.DriverManager
+import java.sql.Statement
+import org.mariadb.jdbc.Driver
+import javax.xml.crypto.Data
+import com.google.common.net.HttpHeaders.AGE
+import io.requery.kotlin.eq
+import io.requery.query.function.Lower.lower
+import io.requery.sql.*
+import sun.misc.MessageUtils.where
+import uk.co.liamjdavison.kotlinsparkroutes.db.model.UserDB
+
+
 //import uk.co.liamjdavison.kotlinsparkroutes.db.model.Models
 
 
@@ -42,6 +52,9 @@ class Server : SparkApplication {
 
 		staticFiles.location("/public")
 
+
+
+
 		// initialize controllers
 		val reflections = Reflections(thisPackage.name, MethodAnnotationsScanner(), TypeAnnotationsScanner(), SubTypesScanner())
 		val controllers = reflections.getTypesAnnotatedWith(SparkController::class.java)
@@ -50,18 +63,27 @@ class Server : SparkApplication {
 			it.newInstance()
 		}
 
-		val dataSource = getH2DataSource()
-		val configuration: Configuration = KotlinConfiguration(dataSource = dataSource, model = uk.co.liamjdavison.kotlinsparkroutes.db.model.Models.DEFAULT)
-		val data = KotlinEntityDataStore<>(configuration)
 
 
 
 
+		val mySQLDataSource = org.mariadb.jdbc.MySQLDataSource()
+		mySQLDataSource.serverName = "127.0.0.1"
+		mySQLDataSource.databaseName = "Employees"
+		mySQLDataSource.port = 3306
+		mySQLDataSource.user = "root"
+		mySQLDataSource.setPassword("indy25tlx")
 
+		val configuration: Configuration = KotlinConfiguration(dataSource = mySQLDataSource, model = uk.co.liamjdavison.kotlinsparkroutes.db.model.Models.DEFAULT)
+		val data = KotlinEntityDataStore<Persistable>(configuration)
 
+		val result = data.invoke {
+			select(UserDB::class) where (UserDB::name eq "Liam") limit 5
 
+		}
 
-
+		val first = result.get().first()
+		println(first)
 
 		displayStartupMessage()
 
@@ -83,15 +105,4 @@ class Server : SparkApplication {
 		logger.info("=============================================================")
 	}
 
-	fun getH2DataSource(): DataSource {
-		val ds: JdbcDataSource = JdbcDataSource()
-		ds.url = "jdbc:h2:˜/test"
-		ds.user = "sa"
-		ds.password = "sa"
-		val ctx = InitialContext()
-		ctx.bind("jdbc/dsName", ds)
-
-		return ds
-
-	}
 }
