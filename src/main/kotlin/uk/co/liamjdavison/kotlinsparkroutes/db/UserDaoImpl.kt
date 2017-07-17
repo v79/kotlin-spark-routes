@@ -1,6 +1,7 @@
 package uk.co.liamjdavison.kotlinsparkroutes.db
 
 import com.sun.org.apache.xpath.internal.operations.Bool
+import io.requery.kotlin.eq
 import uk.co.liamjdavison.kotlinsparkroutes.db.model.UserDB
 
 /**
@@ -8,19 +9,34 @@ import uk.co.liamjdavison.kotlinsparkroutes.db.model.UserDB
  */
 class UserDaoImpl : UserDao, AbstractDao() {
 
-	override fun getUser(id: Int): UserDB {
-		TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+	override fun getUser(id: Int): UserDB? {
+
+		val result = data.invoke {
+			select(UserDB::class) where (UserDB::id eq id) limit 1
+		}
+
+		return result.get().first()
 	}
 
 	override fun getAllUsers(): List<UserDB> {
-		TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+		val result = data.invoke {
+			select(UserDB::class)
+		}
+		if (result.get() != null) {
+
+		}
+
+		return emptyList()
 	}
 
-	override fun updateUser(user: UserDB): Bool {
-		TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+	override fun saveOrUpdate(user: UserDB): Boolean {
+		data.withTransaction {
+			 update(user)
+		}
+		return false
 	}
 
-	override fun deleteUser(user: UserDB): Bool {
+	override fun deleteUser(user: UserDB): Boolean {
 		TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
 	}
 

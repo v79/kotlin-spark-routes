@@ -8,11 +8,11 @@ import uk.co.liamjdavison.kotlinsparkroutes.db.model.UserDB
  */
 interface UserDao {
 
-	fun getUser(id:Int): UserDB
+	fun getUser(id:Int): UserDB?
 
 	fun getAllUsers(): List<UserDB>
 
-	fun updateUser(user: UserDB): Bool
+	fun saveOrUpdate(user: UserDB): Boolean
 
-	fun deleteUser(user: UserDB): Bool
+	fun deleteUser(user: UserDB): Boolean
 }

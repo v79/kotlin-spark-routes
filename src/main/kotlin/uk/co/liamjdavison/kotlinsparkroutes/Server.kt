@@ -1,9 +1,10 @@
 package uk.co.liamjdavison.kotlinsparkroutes
 
 import io.requery.Persistable
-import io.requery.meta.EntityModel
-import io.requery.meta.EntityModelBuilder
-import io.requery.sql.platform.H2
+import io.requery.kotlin.eq
+import io.requery.sql.Configuration
+import io.requery.sql.KotlinConfiguration
+import io.requery.sql.KotlinEntityDataStore
 import org.reflections.Reflections
 import org.reflections.scanners.MethodAnnotationsScanner
 import org.reflections.scanners.SubTypesScanner
@@ -14,20 +15,8 @@ import spark.kotlin.port
 import spark.kotlin.staticFiles
 import spark.servlet.SparkApplication
 import uk.co.liamjdavison.kotlinsparkroutes.annotations.SparkController
-import java.util.*
-import javax.sql.DataSource
-import javax.naming.InitialContext
-import java.sql.Connection
-import java.sql.DriverManager
-import java.sql.Statement
-import org.mariadb.jdbc.Driver
-import javax.xml.crypto.Data
-import com.google.common.net.HttpHeaders.AGE
-import io.requery.kotlin.eq
-import io.requery.query.function.Lower.lower
-import io.requery.sql.*
-import sun.misc.MessageUtils.where
 import uk.co.liamjdavison.kotlinsparkroutes.db.model.UserDB
+import java.util.*
 
 
 //import uk.co.liamjdavison.kotlinsparkroutes.db.model.Models
@@ -84,6 +73,18 @@ class Server : SparkApplication {
 
 		val first = result.get().first()
 		println(first)
+
+
+		val all = data.invoke {
+			select(UserDB::class)
+		}
+		all.get().forEach { println(it) }
+
+		var mum: UserDB = uk.co.liamjdavison.kotlinsparkroutes.db.model.UserDBEntity()
+		mum.name = "Eliza"
+		mum.age = 63
+
+		val insert  = data.insert(mum)
 
 		displayStartupMessage()
 
