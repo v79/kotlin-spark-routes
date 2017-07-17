@@ -1,5 +1,5 @@
 group 'uk.co.liamjdavison'
-version '0.4-SNAPSHOT'
+version '0.5-SNAPSHOT'
 
 repositories {
     mavenLocal()
@@ -33,7 +33,7 @@ apply plugin: 'kotlin'
 
 jar{
     baseName = 'kotlin-spark-routes'
-    version = '0.4'
+    version = '0.5'
     manifest {
         attributes(
             'Main-Class': 'uk.co.liamjdavison.kotlinsparkroutes.MainKt'
@@ -48,6 +48,7 @@ dependencies {
 //    compile "uk.co.ljd:ksparkmvc:$ksparkmvc_version"
 //    kapt "uk.co.ljd:ksparkmvc:$ksparkmvc_version"
 
+    compile "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
     compile "org.jetbrains.kotlin:kotlin-stdlib-jre8:$kotlin_version"
     compile "com.sparkjava:spark-kotlin:$spark_kotlin_version"
     compile "org.thymeleaf:thymeleaf:$thymeleaf_version"
