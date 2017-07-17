@@ -4,6 +4,8 @@ version '0.5-SNAPSHOT'
 repositories {
     mavenLocal()
     mavenCentral()
+    // for exposed
+    maven { url "http://dl.bintray.com/kotlin/exposed" }
 }
 
 buildscript {
@@ -55,6 +57,11 @@ dependencies {
     compile "org.reflections:reflections:0.9.11"
     compile "com.github.salomonbrys.kodein:kodein:$kodein_version"
     compile group: 'org.slf4j', name: 'slf4j-simple', version: '1.6.2'
+
+    // database - jetbrain's exposed
+    compile 'org.jetbrains.exposed:exposed:0.8.2'
+    compile 'org.jetbrains.exposed:spring-transaction:0.8.2'
+    compile group: 'org.mariadb.jdbc', name: 'mariadb-java-client', version: '1.1.7'
 
     testCompile 'junit:junit:4.12'
     testCompile "com.nhaarman:mockito-kotlin:1.5.0"
