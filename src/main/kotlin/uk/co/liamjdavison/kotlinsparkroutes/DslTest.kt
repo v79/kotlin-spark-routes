@@ -1,8 +1,5 @@
 package uk.co.liamjdavison.kotlinsparkroutes.dsl
 
-/**
- * Created by Liam Davison on 17/07/2017.
- */
 import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.SchemaUtils.create
 import org.jetbrains.exposed.sql.SchemaUtils.drop
@@ -21,6 +18,7 @@ object DSLCities : Table() {
 
 fun main(args: Array<String>) {
 	Database.connect("jdbc:mysql://127.0.0.1:3306/Employees?user=root&password=indy25tlx", driver = "org.mariadb.jdbc.Driver")
+//	Database.connect("jdbc:postgresql://127.0.0.1:5434/Employees?user=postgres&password=indy25tlx", driver = "org.postgresql.Driver")
 
 	transaction {
 		create (DSLCities, DSLUsers)

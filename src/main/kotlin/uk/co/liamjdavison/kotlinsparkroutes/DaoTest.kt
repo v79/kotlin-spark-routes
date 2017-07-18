@@ -18,7 +18,7 @@ object Users : IntIdTable() {
 	val age = integer("age")
 }
 
-object Cities: IntIdTable() {
+object Cities : IntIdTable() {
 	val name = varchar("name", 50)
 }
 
@@ -37,45 +37,52 @@ class City(id: EntityID<Int>) : IntEntity(id) {
 	val users by User referrersOn Users.city
 }
 
+
 fun main(args: Array<String>) {
 	println("========== DAO Example with MariaDB ========")
 	Database.connect("jdbc:mysql://127.0.0.1:3306/Employees?user=root&password=indy25tlx", driver = "org.mariadb.jdbc.Driver")
+//	Database.connect("jdbc:postgresql://127.0.0.1:5434/Employees?user=postgres&password=indy25tlx", driver = "org.postgresql.Driver")
 
 	transaction {
-//		logger.addLogger(StdOutSqlLogger())
+		//		logger.addLogger(StdOutSqlLogger())
 
-		create (Cities, Users)
+		create(Cities, Users)
 
+		println("===== Creating cities")
 		val stPete = City.new {
 			name = "St. Petersburg"
 		}
+
 
 		val munich = City.new {
 			name = "Munich"
 		}
 
-		User.new {
-			name = "a"
+		println("===== Creating users")
+		val albert = User.new {
+			name = "albert"
 			city = stPete
 			age = 5
 		}
 
-		User.new {
-			name = "b"
+		val bob = User.new {
+			name = "bob"
 			city = stPete
 			age = 27
 		}
 
-		User.new {
-			name = "c"
+		val chris = User.new {
+			name = "chris"
 			city = munich
 			age = 42
 		}
 
-		println("DSLCities: ${City.all().joinToString {it.name}}")
-		println("DSLUsers in ${stPete.name}: ${stPete.users.joinToString {it.name}}")
-		println("Adults: ${User.find { Users.age greaterEq 18 }.joinToString {it.name}}")
 
-		drop(Users,Cities)
+		println("===== Running queries")
+		println("DSLCities: ${City.all().joinToString { it.name }}")
+		println("DSLUsers in ${stPete.name}: ${stPete.users.joinToString { it.name }}")
+		println("Adults: ${User.find { Users.age greaterEq 18 }.joinToString { it.name }}")
+
+		drop(Users, Cities)
 	}
 }
