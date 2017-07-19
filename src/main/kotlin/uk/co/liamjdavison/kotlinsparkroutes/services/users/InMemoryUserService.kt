@@ -7,6 +7,7 @@ import uk.co.liamjdavison.kotlinsparkroutes.model.User
  */
 class InMemoryUserService : UserService {
 
+
 	var userList: MutableList<User> = mutableListOf()
 
 	init {
@@ -30,10 +31,13 @@ class InMemoryUserService : UserService {
 	}
 
 	override fun deleteUser(user: User): Boolean {
+		println("in userservice and attempting to delete user ${user}")
+		var result: Boolean = false
 		if (userList != null) {
-			return userList.remove(user)
+
+			result = userList.remove(user)
 		}
-		return false
+		return result
 	}
 
 	override fun findUsersByName(name: String): List<User>? {
@@ -47,5 +51,13 @@ class InMemoryUserService : UserService {
 		}
 
 		return userList
+	}
+
+	override fun findUserByName(name: String): User? {
+		for (u in userList) {
+			if (u.name.equals(name, false))
+				return u
+		}
+		return null
 	}
 }

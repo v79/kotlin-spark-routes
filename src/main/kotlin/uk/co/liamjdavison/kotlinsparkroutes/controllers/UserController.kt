@@ -43,6 +43,12 @@ class UserController() : AbstractController("/users") {
 
 				redirect("/")
 			}
+			get("/delete") {
+				logger.info("Attempting to delete user id " + request.queryParams("userId"))
+				val uName: String = request.queryParams("userId")
+				deleteUser(uName)
+				redirect("/")
+			}
 		}
 	}
 
@@ -53,6 +59,15 @@ class UserController() : AbstractController("/users") {
 	fun sayHello(): String {
 		val listSize = userService.getAllUsers().size
 		return "Hello " + listSize
+	}
+
+	fun deleteUser(userName: String): Boolean {
+		val foundUser = userService.findUserByName(userName)
+		var result = false
+		if (foundUser != null) {
+			result = userService.deleteUser(foundUser)
+		}
+		return result
 	}
 
 }

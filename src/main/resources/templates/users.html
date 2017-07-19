@@ -16,7 +16,11 @@
 		<ul class="collection">
 			<li th:each="u : ${users}" class="collection-item">
 				<div>
-					<span th:text="${u.prettyPrint()}" th:remove="tag"></span><a href="#!" class="secondary-content"><i
+					<!--<span th:text="${u.prettyPrint()}" th:remove="tag"></span><a href="delete/" th:href="@{delete/(userId=${u.name})}" class="secondary-content"><i
+						class="material-icons">delete</i></a>-->
+					<span th:text="${u.prettyPrint()}" th:remove="tag"></span><a href="delete/"
+					                                                             th:href="@{delete(userId=${u.name})}"
+					                                                             class="secondary-content"><i
 						class="material-icons">delete</i></a>
 				</div>
 			</li>
@@ -35,8 +39,7 @@
 			</div>
 			<div class="input-field col s2 pull-s1">
 				<button id="addUser-btn-add" type="submit" class="btn waves-effect waves-light teal darken-1">Add User
-					<i
-							class="material-icons right">add</i></button>
+					<i class="material-icons right">add</i></button>
 			</div>
 		</form>
 	</div>

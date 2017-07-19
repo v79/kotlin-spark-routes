@@ -27,4 +27,9 @@ interface UserService{
 	 */
 	fun findUsersByName(name: String): List<User>?
 
+	/**
+	 * Find just one user which matches the given name
+	 */
+	fun findUserByName(name: String): User?
+
 }
