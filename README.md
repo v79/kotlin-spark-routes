@@ -5,6 +5,8 @@ This is where I play around with Kotlin, kotlin-sparkjava, and other technologie
 
 A running version of the app _may_ be found [hosted on Heroku](https://kotlin-spark-routes.herokuapp.com/users/).
 
+For commentry and thoughts on my Kotlin experiments, [see my blog](http://www.liamjdavison.co.uk/2017/07/kotlin-web-development-experiments/).
+
 ## Goals and technologies:
 
 * HTTP server through [spark-kotlin](https://github.com/perwendel/spark-kotlin)
