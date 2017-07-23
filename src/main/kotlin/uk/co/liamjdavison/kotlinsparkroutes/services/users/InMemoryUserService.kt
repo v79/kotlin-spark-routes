@@ -7,7 +7,6 @@ import uk.co.liamjdavison.kotlinsparkroutes.model.User
  */
 class InMemoryUserService : UserService {
 
-
 	var userList: MutableList<User> = mutableListOf()
 
 	init {
@@ -60,4 +59,9 @@ class InMemoryUserService : UserService {
 		}
 		return null
 	}
+
+	override fun getUser(id: Int): User? {
+		return userList.get(id)
+	}
+
 }

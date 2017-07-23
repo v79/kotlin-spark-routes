@@ -19,7 +19,7 @@ class UserControllerTest {
 	}
 
 	init {
-		controller.kodein = Kodein {
+		controller.injectServices = Kodein {
 			bind<UserService>() with provider { mockUserService }
 		}
 	}
@@ -27,7 +27,7 @@ class UserControllerTest {
 	@Test
 	fun testSayHello_andGetEmptyList() {
 		// setup
-		controller.userService = controller.kodein.instance()
+		controller.userService = controller.injectServices.instance()
 		// execute
 		val result = controller.sayHello()
 		// verify
@@ -37,7 +37,7 @@ class UserControllerTest {
 	@Test
 	fun testMockUserServiceReturnsNoUsers() {
 		// setup
-		controller.userService = controller.kodein.instance()
+		controller.userService = controller.injectServices.instance()
 		// execute
 		val result = controller.userService.getAllUsers()
 		// verify

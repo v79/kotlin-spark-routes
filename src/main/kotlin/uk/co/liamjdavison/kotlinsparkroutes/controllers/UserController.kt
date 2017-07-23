@@ -21,7 +21,7 @@ class UserController() : AbstractController("/users") {
 		Spark.path(path) {
 
 			// inject userService at this point; any earlier and it can't be overridden in tests (unless I can get lazy injection working?
-			userService = kodein.instance()
+			userService = injectServices.instance("db")
 
 			get("/") {
 				logger.info("in users with session " + session?.id())
@@ -45,8 +45,12 @@ class UserController() : AbstractController("/users") {
 			}
 			get("/delete") {
 				logger.info("Attempting to delete user id " + request.queryParams("userId"))
-				val uName: String = request.queryParams("userId")
-				deleteUser(uName)
+//				val uName: String = request.queryParams("userId")
+//				deleteUser(uName)
+				val userToDelete = userService.getUser(request.queryParams("userId").toInt())
+				if (userToDelete != null) {
+					userService.deleteUser(userToDelete)
+				}
 				redirect("/")
 			}
 		}

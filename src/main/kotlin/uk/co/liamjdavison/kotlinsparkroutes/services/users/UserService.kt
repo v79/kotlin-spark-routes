@@ -32,4 +32,9 @@ interface UserService{
 	 */
 	fun findUserByName(name: String): User?
 
+	/**
+	 * Return the user with the given ID
+	 */
+	fun getUser(id: Int): User?
+
 }
