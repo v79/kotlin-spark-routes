@@ -12,7 +12,7 @@ For commentry and thoughts on my Kotlin experiments, [see my blog](http://www.li
 * HTTP server through [spark-kotlin](https://github.com/perwendel/spark-kotlin)
 * Page layouts and templating with [Thymeleaf](http://www.thymeleaf.org/); others supported by spark-kotlin may follow later
 * Dependency Injection framework - exploring [Kodein](https://github.com/SalomonBrys/Kodein), [Injekt](https://github.com/kohesive/injekt) and [Dagger 2](https://github.com/google/dagger)
-* Database handling and ORM - perhaps [requery](https://github.com/requery/requery), looking for alternatives which support MySQL/MariaDB/Postgresql
+* Database handling and ORM with JetBrain's own [Exposed](https://github.com/JetBrains/Exposed), which is odd but interesting
 * Reflection and annotation processing
 * Unit testing with JUnit and [nhaarman's Kotlin Mockito](https://github.com/nhaarman/mockito-kotlin)
 * Making it pretty through [Materializecss](https://github.com/Dogfalo/materialize)
