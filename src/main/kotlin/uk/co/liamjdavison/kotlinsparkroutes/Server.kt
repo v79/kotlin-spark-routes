@@ -5,6 +5,7 @@ import org.reflections.scanners.MethodAnnotationsScanner
 import org.reflections.scanners.SubTypesScanner
 import org.reflections.scanners.TypeAnnotationsScanner
 import org.slf4j.LoggerFactory
+import spark.kotlin.get
 import spark.kotlin.port
 import spark.kotlin.staticFiles
 import spark.servlet.SparkApplication
@@ -26,21 +27,25 @@ class Server : SparkApplication {
 		val portNumber: String? = System.getProperty("server.port")
 		port(number = portNumber?.toInt() ?: 4567)
 
+
+		displayStartupMessage()
+
+
 		staticFiles.location("/public")
 
 		// initialize controllers
 		val reflections = Reflections(thisPackage.name, MethodAnnotationsScanner(), TypeAnnotationsScanner(), SubTypesScanner())
 		val controllers = reflections.getTypesAnnotatedWith(SparkController::class.java)
 		controllers.forEach {
-			//			logger.info("Instantiating controller " + it.simpleName)
+			logger.info("NOT Instantiating controller " + it.simpleName)
 //			it.newInstance()
 		}
 
-		displayStartupMessage()
 
-//		get(path = "/") {
-//			redirect(location = "/users/")
-//		}
+
+		get(path = "/") {
+			redirect(location = "/users/")
+		}
 	}
 
 	override fun init() {
