@@ -5,7 +5,6 @@ import org.reflections.scanners.MethodAnnotationsScanner
 import org.reflections.scanners.SubTypesScanner
 import org.reflections.scanners.TypeAnnotationsScanner
 import org.slf4j.LoggerFactory
-import spark.kotlin.get
 import spark.kotlin.port
 import spark.kotlin.staticFiles
 import spark.servlet.SparkApplication
@@ -39,9 +38,9 @@ class Server : SparkApplication {
 
 		displayStartupMessage()
 
-		get(path = "/") {
-			redirect(location = "/users/")
-		}
+//		get(path = "/") {
+//			redirect(location = "/users/")
+//		}
 	}
 
 	override fun init() {
@@ -55,6 +54,8 @@ class Server : SparkApplication {
 		logger.info("OS: " + System.getProperty("os.name"))
 		logger.info("Port: " + port())
 		logger.info("JDBC URL: " + System.getenv("JDBC_DATABASE_URL"))
+		logger.info("JDBC USERNAME: " + System.getenv("JDBC_DATABASE_USERNAME"))
+		logger.info("JDBC PASSWORD: " + System.getenv("JDBC_DATABASE_PASSWORD"))
 		logger.info("=============================================================")
 	}
 }
