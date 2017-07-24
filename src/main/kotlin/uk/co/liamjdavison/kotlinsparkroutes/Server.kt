@@ -12,11 +12,13 @@ import spark.servlet.SparkApplication
 import uk.co.liamjdavison.kotlinsparkroutes.annotations.SparkController
 import java.util.*
 
+
 /**
  * Root class representing our embedded Jetty SparkJava server. The server is initialised, and each controller is constructed.
  * The server port number defaults to 4567; to change it, set the JAVA environment variable server.port (e.g. -Dserver.port=8000).
  * Individual controllers are responsible for their own routes.
  */
+
 class Server : SparkApplication {
 	val logger = LoggerFactory.getLogger(Server::class.java)
 	val thisPackage = this.javaClass.`package`

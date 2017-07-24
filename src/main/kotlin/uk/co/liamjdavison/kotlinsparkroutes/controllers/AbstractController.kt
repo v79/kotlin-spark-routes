@@ -9,6 +9,7 @@ import spark.kotlin.before
 import spark.kotlin.notFound
 import uk.co.liamjdavison.ThymeleafEngine
 import uk.co.liamjdavison.kotlinsparkroutes.services.users.InMemoryUserService
+import uk.co.liamjdavison.kotlinsparkroutes.services.users.UserDBService
 import uk.co.liamjdavison.kotlinsparkroutes.services.users.UserService
 
 /**
@@ -22,8 +23,9 @@ abstract class AbstractController(path: String) {
 	var session: Session? = null
 
 	// Service dependency injection
-	open var kodein = Kodein {
-		bind<UserService>() with provider { InMemoryUserService() }
+	open var injectServices = Kodein {
+		bind<UserService>("inmemory") with provider { InMemoryUserService() }
+		bind<UserService>("db") with provider { UserDBService() }
 	}
 
 	open lateinit var path: String

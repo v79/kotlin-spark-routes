@@ -19,7 +19,7 @@
 					<!--<span th:text="${u.prettyPrint()}" th:remove="tag"></span><a href="delete/" th:href="@{delete/(userId=${u.name})}" class="secondary-content"><i
 						class="material-icons">delete</i></a>-->
 					<span th:text="${u.prettyPrint()}" th:remove="tag"></span><a href="delete/"
-					                                                             th:href="@{delete(userId=${u.name})}"
+					                                                             th:href="@{delete(userId=${u.id})}"
 					                                                             class="secondary-content"><i
 						class="material-icons">delete</i></a>
 				</div>
