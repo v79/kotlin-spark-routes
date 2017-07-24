@@ -33,8 +33,8 @@ class Server : SparkApplication {
 		val reflections = Reflections(thisPackage.name, MethodAnnotationsScanner(), TypeAnnotationsScanner(), SubTypesScanner())
 		val controllers = reflections.getTypesAnnotatedWith(SparkController::class.java)
 		controllers.forEach {
-			logger.info("Instantiating controller " + it.simpleName)
-			it.newInstance()
+			//			logger.info("Instantiating controller " + it.simpleName)
+//			it.newInstance()
 		}
 
 		displayStartupMessage()
@@ -54,6 +54,7 @@ class Server : SparkApplication {
 		logger.info("Date: " + Date().toString())
 		logger.info("OS: " + System.getProperty("os.name"))
 		logger.info("Port: " + port())
+		logger.info("JDBC URL: " + System.getenv("JDBC_DATABASE_URL"))
 		logger.info("=============================================================")
 	}
 }
