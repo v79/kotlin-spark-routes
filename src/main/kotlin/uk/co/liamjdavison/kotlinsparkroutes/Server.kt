@@ -29,7 +29,6 @@ class Server : SparkApplication {
 
 		displayStartupMessage(portNumber?.toInt())
 
-
 		staticFiles.location("/public")
 
 		// initialize controllers
@@ -56,8 +55,6 @@ class Server : SparkApplication {
 		logger.info("OS: " + System.getProperty("os.name"))
 		logger.info("Port: " + portNumber)
 		logger.info("JDBC URL: " + System.getenv("JDBC_DATABASE_URL"))
-		logger.info("JDBC USERNAME: " + System.getenv("JDBC_DATABASE_USERNAME"))
-		logger.info("JDBC PASSWORD: " + System.getenv("JDBC_DATABASE_PASSWORD"))
 		logger.info("=============================================================")
 	}
 

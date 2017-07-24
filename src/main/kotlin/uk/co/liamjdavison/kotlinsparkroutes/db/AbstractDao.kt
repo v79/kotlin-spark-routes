@@ -22,8 +22,8 @@ abstract class AbstractDao : Dao {
 		val dbPassword: String = dbConnections.instance("dbPassword")
 		val dbDriver: String = dbConnections.instance("dbDriverClass")
 
-		logger.info("======== Connecting to DB as: ${dbConnectionString}${dbName}?user=${dbUser}&password=${dbPassword}")
-		logger.info("======== Using driver: ${dbDriver}")
+		logger.info("Connecting to DB: ${dbConnectionString}${dbName}")  // ?user=${dbUser}&password=${dbPassword}
+		logger.info("Using driver: ${dbDriver}")
 		Database.connect(url = dbConnectionString + dbName, user = dbUser, password = dbPassword, driver = dbDriver)
 	}
 }
