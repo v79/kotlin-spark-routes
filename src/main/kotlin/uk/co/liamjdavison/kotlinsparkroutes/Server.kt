@@ -6,6 +6,7 @@ import org.reflections.scanners.SubTypesScanner
 import org.reflections.scanners.TypeAnnotationsScanner
 import org.slf4j.LoggerFactory
 import spark.kotlin.get
+import spark.kotlin.port
 import spark.kotlin.staticFiles
 import spark.servlet.SparkApplication
 import uk.co.liamjdavison.kotlinsparkroutes.annotations.SparkController
@@ -24,8 +25,7 @@ class Server : SparkApplication {
 
 	constructor(args: Array<String>) {
 		val portNumber: String? = System.getProperty("server.port")
-//		port(number = portNumber?.toInt() ?: 4567)
-
+		port(number = portNumber?.toInt() ?: 4567)
 
 		displayStartupMessage(portNumber?.toInt())
 
@@ -36,11 +36,9 @@ class Server : SparkApplication {
 		val reflections = Reflections(thisPackage.name, MethodAnnotationsScanner(), TypeAnnotationsScanner(), SubTypesScanner())
 		val controllers = reflections.getTypesAnnotatedWith(SparkController::class.java)
 		controllers.forEach {
-			logger.info("NOT Instantiating controller " + it.simpleName)
-//			it.newInstance()
+			logger.info("Instantiating controller " + it.simpleName)
+			it.newInstance()
 		}
-
-
 
 		get(path = "/") {
 			redirect(location = "/users/")
@@ -62,4 +60,5 @@ class Server : SparkApplication {
 		logger.info("JDBC PASSWORD: " + System.getenv("JDBC_DATABASE_PASSWORD"))
 		logger.info("=============================================================")
 	}
+
 }

@@ -28,7 +28,6 @@ class UserDao : AbstractDao(), Dao {
 
 	init {
 		transaction {
-			//			SchemaUtils.createMissingTablesAndColumns(UserCompanion)
 			SchemaUtils.create(UserCompanion)
 		}
 	}
