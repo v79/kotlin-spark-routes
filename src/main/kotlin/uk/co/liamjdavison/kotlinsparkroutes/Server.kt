@@ -6,7 +6,6 @@ import org.reflections.scanners.SubTypesScanner
 import org.reflections.scanners.TypeAnnotationsScanner
 import org.slf4j.LoggerFactory
 import spark.kotlin.get
-import spark.kotlin.port
 import spark.kotlin.staticFiles
 import spark.servlet.SparkApplication
 import uk.co.liamjdavison.kotlinsparkroutes.annotations.SparkController
@@ -25,10 +24,10 @@ class Server : SparkApplication {
 
 	constructor(args: Array<String>) {
 		val portNumber: String? = System.getProperty("server.port")
-		port(number = portNumber?.toInt() ?: 4567)
+//		port(number = portNumber?.toInt() ?: 4567)
 
 
-		displayStartupMessage()
+		displayStartupMessage(portNumber?.toInt())
 
 
 		staticFiles.location("/public")
@@ -52,12 +51,12 @@ class Server : SparkApplication {
 		TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
 	}
 
-	private fun displayStartupMessage() {
+	private fun displayStartupMessage(portNumber: Int?) {
 		logger.info("=============================================================")
 		logger.info("Kotlin Spark Route Tester Started")
 		logger.info("Date: " + Date().toString())
 		logger.info("OS: " + System.getProperty("os.name"))
-		logger.info("Port: " + port())
+		logger.info("Port: " + portNumber)
 		logger.info("JDBC URL: " + System.getenv("JDBC_DATABASE_URL"))
 		logger.info("JDBC USERNAME: " + System.getenv("JDBC_DATABASE_USERNAME"))
 		logger.info("JDBC PASSWORD: " + System.getenv("JDBC_DATABASE_PASSWORD"))
