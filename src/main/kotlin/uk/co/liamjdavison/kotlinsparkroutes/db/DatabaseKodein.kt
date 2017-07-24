@@ -2,6 +2,8 @@ package uk.co.liamjdavison.kotlinsparkroutes.db
 
 import com.github.salomonbrys.kodein.Kodein
 import com.github.salomonbrys.kodein.with
+import java.net.URI
+
 
 val dbModule = Kodein.Module {
 
@@ -15,25 +17,38 @@ val dbModule = Kodein.Module {
 
 
 
-	if (jdbcUsername != null && jdbcPassword != null && jdbcUrl != null && jdbcUrl.startsWith("jdbc", true)) {
-		val split: List<String> = jdbcUrl?.split(":")
-		split.forEach {
-			println("++++++++++++++++++++ " + it)
-		}
-		// 0: jdbc
-		// 1: postgresql
-		// 2: domain
-		// 3: port
-		val connectionString = split[0] + ":" + split[1] + ":" + split[2] + ":" + split[3]
-		println("++++++++++ " + connectionString)
-		// 4: schema name etc
-		val schemaSplit = split[4].split("?")
-		val schemaName = schemaSplit[0]
+	if (System.getenv("DATABASE_URL") != null) {
+
+		val dbUri = URI(System.getenv("DATABASE_URL"))
+
+		val jdbcUsername = dbUri.userInfo.split(":")[0]
+		val jdbcPassword = dbUri.userInfo.split(":")[1]
+		val dbUrl = "jdbc:postgresql://" + dbUri.getHost() + ':' + dbUri.getPort() // + dbUri.getPath()
+
+		println("++++++++++++ extracted dbUrl: " + dbUrl)
+		println("++++++++++++ extracted jdbcUsername: " + jdbcUsername)
+		println("++++++++++++ extracted jdbcPassword: " + jdbcPassword)
+		println("++++++++++++ extracted path: " + dbUri.path)
+
+
+//		val split: List<String> = jdbcUrl?.split(":")
+//		split.forEach {
+//			println("++++++++++++++++++++ " + it)
+//		}
+//		// 0: jdbc
+//		// 1: postgresql
+//		// 2: domain
+//		// 3: port
+//		val connectionString = split[0] + ":" + split[1] + ":" + split[2] + ":" + split[3]
+//		println("++++++++++ " + connectionString)
+//		// 4: schema name etc
+//		val schemaSplit = split[4].split("?")
+//		val schemaName = schemaSplit[0]
 
 
 		constant("dbDriverClass") with "org.postgresql.Driver"
-		constant("dbConnectionString") with connectionString
-		constant("dbDatabase") with schemaName
+		constant("dbConnectionString") with dbUrl
+		constant("dbDatabase") with dbUri.path
 		constant("dbPassword") with jdbcPassword
 		constant("dbUser") with jdbcUsername
 	} else {
