@@ -25,8 +25,10 @@ class UserController() : AbstractController("/users") {
 
 			get("/") {
 				logger.info("in users with session " + session?.id())
-				val model: MutableMap<String, List<User>> = hashMapOf<String, List<User>>()
+				val model: MutableMap<String, Any> = hashMapOf<String, Any>()
+				model.put("title", "List of users")
 				model.put("users", getAllUsers())
+				model.put("session", session as Any)
 				engine.render(ModelAndView(model, "users"))
 			}
 

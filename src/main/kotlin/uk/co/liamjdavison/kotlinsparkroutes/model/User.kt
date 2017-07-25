@@ -11,9 +11,9 @@ data class User(val id: Int, val name: String, val age: Int?) {
 
 	fun prettyPrint(): String {
 		if(age!= null) {
-			return id.toString() + " " + name + " " + age
+			return name + " " + age
 		} else {
-			return id.toString() + " " + name + " (ageless)"
+			return name + " (ageless)"
 		}
 	}
 }

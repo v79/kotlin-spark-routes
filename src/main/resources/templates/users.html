@@ -1,13 +1,37 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-	<div th:replace="~{fragments/head-imports :: links}"></div>
-	<title>List of Users</title>
-</head>
+<div th:replace="~{fragments/head-imports :: links(pageTitle=${title})}">
+
+</div>
 <body>
-<!--Import jQuery before materialize.js-->
-<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.99.0/js/materialize.min.js"></script>
+
+
+<nav>
+	<div class="nav-wrapper teal blue-grey darken-2">
+		<a href="#" class="brand-logo right hide-on-med-and-down">Logo</a>
+		<ul id="nav-mobile" class="left hide-on-small">
+			<li><a class="waves-effect btn waves-light modal-trigger" data-target="session">Session</a>
+			<li><a href="#">Link2</a></li>
+			<li><a href="#">Link3</a></li>
+		</ul>
+	</div>
+</nav>
+
+<div id="session" class="modal">
+	<div class="modal-content">
+		<h4>Session information</h4>
+		<p>Session id: <span th:text="${session.id}"/></p>
+		<p>Session created: <span th:text="${session.creationTime}"/></p>
+		<p>Session last accessed: <span th:text="${session.lastAccessedTime}"/></p>
+		<p><strong>Alternatively...</strong></p>
+		<p>Thymeleaf session: <span th:text="#{session}"/></p>
+	</div>
+	<div class="modal-footer">
+		<a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Close</a>
+	</div>
+</div>
+
+
 <div class="container">
 	<div class="row">
 		<div class="col s12"><h2>All Users</h2></div>
@@ -16,12 +40,11 @@
 		<ul class="collection">
 			<li th:each="u : ${users}" class="collection-item">
 				<div>
-					<!--<span th:text="${u.prettyPrint()}" th:remove="tag"></span><a href="delete/" th:href="@{delete/(userId=${u.name})}" class="secondary-content"><i
-						class="material-icons">delete</i></a>-->
-					<span th:text="${u.prettyPrint()}" th:remove="tag"></span><a href="delete/"
-					                                                             th:href="@{delete(userId=${u.id})}"
-					                                                             class="secondary-content"><i
-						class="material-icons">delete</i></a>
+					<span th:text="${u.prettyPrint()}" th:remove="tag"></span>
+					<a href="delete/"
+					   th:href="@{delete(userId=${u.id})}"
+					   class="secondary-content"><i
+							class="material-icons">delete</i></a>
 				</div>
 			</li>
 		</ul>
@@ -52,6 +75,12 @@
 </div>
 
 <div th:replace="~{fragments/footer :: footer}"></div>
+
+<!--Import jQuery before materialize.js-->
+<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.99.0/js/materialize.min.js"></script>
+
+<script src="/js/init.js"></script>
 
 </body>
 </html>
