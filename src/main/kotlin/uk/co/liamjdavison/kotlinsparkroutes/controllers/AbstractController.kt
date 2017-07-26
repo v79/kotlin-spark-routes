@@ -21,14 +21,13 @@ abstract class AbstractController(path: String) {
 	protected val engine: ThymeleafEngine = ThymeleafEngine()
 
 	var session: Session? = null
+	open lateinit var path: String
 
 	// Service dependency injection
 	open var injectServices = Kodein {
 		bind<UserService>("inmemory") with provider { InMemoryUserService() }
 		bind<UserService>("db") with provider { UserDBService() }
 	}
-
-	open lateinit var path: String
 
 	init {
 		this.path = path

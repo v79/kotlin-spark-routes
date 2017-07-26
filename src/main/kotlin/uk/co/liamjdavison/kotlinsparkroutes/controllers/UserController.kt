@@ -10,31 +10,30 @@ import uk.co.liamjdavison.kotlinsparkroutes.model.User
 import uk.co.liamjdavison.kotlinsparkroutes.services.users.UserService
 
 /**
- * Controller for users. Responds to requests under the /users/ path
+ * Controller for users. Responds to requests under the /users path
  */
 @SparkController
 class UserController() : AbstractController("/users") {
 
 	lateinit var userService: UserService
+	val model: MutableMap<String, Any> = hashMapOf<String, Any>()
+	val userControllerHome = path + "/"
 
 	init {
 		Spark.path(path) {
 
 			// inject userService at this point; any earlier and it can't be overridden in tests (unless I can get lazy injection working?
 			userService = injectServices.instance("db")
-
 			get("/") {
 				logger.info("in users with session " + session?.id())
-				val model: MutableMap<String, Any> = hashMapOf<String, Any>()
 				model.put("title", "List of users")
 				model.put("users", getAllUsers())
-				model.put("session", session as Any)
+				session?.let { model.put("session", it) }
 				engine.render(ModelAndView(model, "users"))
 			}
 
 			get("/add") {
 				logger.info("In users/add")
-				val model: MutableMap<String, String> = hashMapOf<String, String>()
 				engine.render(ModelAndView(model, "addUser"))
 			}
 
@@ -42,38 +41,21 @@ class UserController() : AbstractController("/users") {
 				val u: User = User(request.queryParams("name"), request.queryParams("age").toInt())
 				logger.info("Submitting user information for user ${u}")
 				userService.addUser(u)
-
-				redirect("/")
+				redirect(userControllerHome)
 			}
 			get("/delete") {
 				logger.info("Attempting to delete user id " + request.queryParams("userId"))
-//				val uName: String = request.queryParams("userId")
-//				deleteUser(uName)
 				val userToDelete = userService.getUser(request.queryParams("userId").toInt())
 				if (userToDelete != null) {
 					userService.deleteUser(userToDelete)
 				}
-				redirect("/")
+				redirect(userControllerHome)
 			}
 		}
 	}
 
 	private fun getAllUsers(): List<User> {
 		return userService.getAllUsers()
-	}
-
-	fun sayHello(): String {
-		val listSize = userService.getAllUsers().size
-		return "Hello " + listSize
-	}
-
-	fun deleteUser(userName: String): Boolean {
-		val foundUser = userService.findUserByName(userName)
-		var result = false
-		if (foundUser != null) {
-			result = userService.deleteUser(foundUser)
-		}
-		return result
 	}
 
 }
