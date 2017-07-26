@@ -30,6 +30,9 @@ class Server : SparkApplication {
 		displayStartupMessage(portNumber?.toInt())
 
 		staticFiles.location("/public")
+		get(path = "/") {
+			redirect(location = "/users/")
+		}
 
 		// initialize controllers
 		val reflections = Reflections(thisPackage.name, MethodAnnotationsScanner(), TypeAnnotationsScanner(), SubTypesScanner())
@@ -38,14 +41,10 @@ class Server : SparkApplication {
 			logger.info("Instantiating controller " + it.simpleName)
 			it.newInstance()
 		}
-
-		get(path = "/") {
-			redirect(location = "/users/")
-		}
 	}
 
 	override fun init() {
-		TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+		TODO("Not really necessary; the work is done in the constructor")
 	}
 
 	private fun displayStartupMessage(portNumber: Int?) {
