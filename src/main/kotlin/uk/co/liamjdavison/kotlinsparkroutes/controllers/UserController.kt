@@ -52,15 +52,19 @@ class UserController() : AbstractController("/users") {
 				}
 				redirect(userControllerHome)
 			}
-			get("/ajax/delete/*") {
-				logger.info("beep called with splat " + request.splat()[0])
-				val userId: String? = request.splat()[0]
 
-				userId?.let {
-					val userToDelete = userService.getUser(it.toInt())
-					userToDelete?.let { it1 -> model.put("userToDelete", it1) }
+			// Ajax paths all go here
+			Spark.path("/ajax/") {
+				get("delete/*") {
+					logger.info("beep called with splat " + request.splat()[0])
+					val userId: String? = request.splat()[0]
+
+					userId?.let {
+						val userToDelete = userService.getUser(it.toInt())
+						userToDelete?.let { it1 -> model.put("userToDelete", it1) }
+					}
+					engine.render(ModelAndView(model, "modals/users-delete"))
 				}
-				engine.render(ModelAndView(model, "modals/users-delete"))
 			}
 		}
 	}
