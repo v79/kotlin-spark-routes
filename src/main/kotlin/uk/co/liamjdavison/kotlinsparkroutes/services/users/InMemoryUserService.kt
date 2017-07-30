@@ -33,7 +33,6 @@ class InMemoryUserService : UserService {
 		println("in userservice and attempting to delete user ${user}")
 		var result: Boolean = false
 		if (userList != null) {
-
 			result = userList.remove(user)
 		}
 		return result

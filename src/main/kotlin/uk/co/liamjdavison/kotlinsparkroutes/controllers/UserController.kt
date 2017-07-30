@@ -20,10 +20,11 @@ class UserController() : AbstractController("/users") {
 	val userControllerHome = path + "/"
 
 	init {
+		// inject userService at this point; any earlier and it can't be overridden in tests (unless I can get lazy injection working?
+		userService = injectServices.instance("db")
+
 		Spark.path(path) {
 
-			// inject userService at this point; any earlier and it can't be overridden in tests (unless I can get lazy injection working?
-			userService = injectServices.instance("db")
 			get("/") {
 				logger.info("in users with session " + session?.id())
 				model.put("title", "List of users")
@@ -50,6 +51,16 @@ class UserController() : AbstractController("/users") {
 					userService.deleteUser(userToDelete)
 				}
 				redirect(userControllerHome)
+			}
+			get("/ajax/delete/*") {
+				logger.info("beep called with splat " + request.splat()[0])
+				val userId: String? = request.splat()[0]
+
+				userId?.let {
+					val userToDelete = userService.getUser(it.toInt())
+					userToDelete?.let { it1 -> model.put("userToDelete", it1) }
+				}
+				engine.render(ModelAndView(model, "modals/users-delete"))
 			}
 		}
 	}

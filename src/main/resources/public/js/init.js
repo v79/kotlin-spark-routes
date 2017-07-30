@@ -5,4 +5,16 @@ $(document).ready(function() {
         dismissible: true
     });
 
+
 }); // end of document ready
+
+// generic function to open a modal dialog. Specify the controller path which will supply the view, and the HTML divs to update
+function openModal(sparkPath, dataDiv, containerDiv) {
+    $.ajax({
+        url: sparkPath,
+        success: function(data) {
+            $(dataDiv).html(data);
+            $(containerDiv).modal('open')
+        }
+    })
+}

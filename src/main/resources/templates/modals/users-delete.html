@@ -1,0 +1,13 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<div id="confirmDelete" th:fragment="deleteFragment">
+	<div class="modal-content">
+		<h4>Confirm delete</h4>
+		<p>Confirm deletion of user <span th:text="${userToDelete.id}"/>: <span th:text="${userToDelete.prettyPrint()}">id</span></span>
+		</p>
+	</div>
+	<div class="modal-footer">
+		<a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Cancel</a>
+		<a href="delete/" th:href="@{delete(userId=${userToDelete.id})}"
+		   class="modal-action btn-flat red accent-1 waves-red">Delete</a>
+	</div>
+</div>

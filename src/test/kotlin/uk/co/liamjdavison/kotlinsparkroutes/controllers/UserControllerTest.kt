@@ -7,6 +7,7 @@ import com.github.salomonbrys.kodein.provider
 import com.nhaarman.mockito_kotlin.doReturn
 import com.nhaarman.mockito_kotlin.mock
 import org.junit.Assert
+import org.junit.Test
 import uk.co.liamjdavison.kotlinsparkroutes.model.User
 import uk.co.liamjdavison.kotlinsparkroutes.services.users.UserService
 
@@ -23,17 +24,8 @@ class UserControllerTest {
 		}
 	}
 
-	//@Test
-	fun testSayHello_andGetEmptyList() {
-		// setup
-		controller.userService = controller.injectServices.instance()
-		// execute
-		val result = controller.sayHello()
-		// verify
-		Assert.assertEquals(result, "Hello 0")
-	}
 
-	//@Test
+	@Test
 	fun testMockUserServiceReturnsNoUsers() {
 		// setup
 		controller.userService = controller.injectServices.instance()
