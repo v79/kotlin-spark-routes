@@ -14,7 +14,7 @@ buildscript {
     ext.ksparkmvc_version = '0.0.20-SNAPSHOT'
     ext.thymeleaf_version = '3.0.6.RELEASE'
     ext.kodein_version = '4.0.0'
-    ext.exposed_version = '0.8.4'
+    ext.exposed_version = '0.8.5'
     repositories {
         mavenLocal()
         mavenCentral()
