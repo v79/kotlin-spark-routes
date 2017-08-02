@@ -19,6 +19,9 @@ data class User(val id: Int, val name: String, val age: Int) {
 		if (age < 0) {
 			errorMap.put("age", "Age must be greater than zero")
 		}
+		if (name.isNullOrEmpty() || name.isEmpty()) {
+			errorMap.put("name", "Name must not be blank")
+		}
 
 		return errorMap
 	}
