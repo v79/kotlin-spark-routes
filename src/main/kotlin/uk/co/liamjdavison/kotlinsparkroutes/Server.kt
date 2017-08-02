@@ -27,12 +27,12 @@ class Server : SparkApplication {
 		val portNumber: String? = System.getProperty("server.port")
 		port(number = portNumber?.toInt() ?: 4567)
 
-		displayStartupMessage(portNumber?.toInt())
-
 		staticFiles.location("/public")
 		get(path = "/") {
 			redirect(location = "/users/")
 		}
+
+		displayStartupMessage(portNumber?.toInt())
 
 		// initialize controllers
 		val reflections = Reflections(thisPackage.name, MethodAnnotationsScanner(), TypeAnnotationsScanner(), SubTypesScanner())
