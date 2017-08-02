@@ -23,7 +23,7 @@
 		<div class="col s12"><h2>All Users</h2></div>
 	</div>
 	<div class="row">
-		<ul class="collection">
+		<ul class="collection col s12">
 			<li th:each="u : ${users}" class="collection-item">
 				<div>
 					<span th:text="${u.prettyPrint()}" th:remove="tag"></span>
@@ -38,46 +38,46 @@
 		</ul>
 	</div>
 	<div class="row">
-		<h3>Add User</h3>
-		<form id="addUser" action="/users/add-submit" method="post" class="col s12">
-			<div class="input-field col s5">
-				<label for="addUser-name">Name</label>
+		<div class="col s12">
+			<h3>Add User</h3>
+		</div>
+	</div>
+	<form id="addUser" action="/users/add-submit" method="post">
+		<div class="row">
+			<div class="input-field col m6 s12">
+				<label for="addUser-name">Name <span th:if="${errors != null}" th:text="${errors.get('name')}" class="red-text"></span></label>
 				<input id="addUser-name" name="name" placeholder="Name" type="text" th:value="${name}"
 				       required="required"
 				>
-				<div th:if="${errorMap != null}">
-					<p th:if="${errorMap.get('name')}" th:text="${errorMap.get('name')}">Validation error message for
-						name</p>
-				</div>
 			</div>
-			<div class="input-field col s2">
-				<label for="addUser-age">Age</label>
+			<div class="input-field col m4 s8">
+				<label for="addUser-age">Age <span th:if="${errors != null}" th:text="${errors.get('age')}" class="red-text"></span></label>
 				<input id="addUser-age" name="age" placeholder="Age" class="input-field col s3" type="number"
 				       th:value="${age}">
-				<div th:if="${errorMap != null}">
-					<p th:if="${errorMap.get('age')}" th:text="${errorMap.get('age')}">Validation error message for
-						age</p>
-				</div>
 			</div>
-			<div class="input-field col s2 pull-s1">
+			<div class="input-field col m2 s2">
 				<button id="addUser-btn-add" type="submit" class="btn waves-effect waves-light teal darken-1">Add User
 					<i class="material-icons right">add</i></button>
 			</div>
-			<div th:if="${errorMap != null}">
-				<p>Errors found</p>
-				<!--<ul th:each="error : ${errorMap}">
-					<li>Field: <span th:text="${error.key}"></span>, error is: <span th:text="${error.value}"></span>
-					</li>
-				</ul>-->
-			</div>
-		</form>
-	</div>
-	<div class="section">
-		<div class="row">
-			<div class="col s12"><img src="/Costa_rican_frog.jpg" title="Costa rican frog" width="200px"
-			                          class="z-depth-4"/></div>
 		</div>
+
+		<!--	<div th:if="${errors != null}" class="row">
+				<div col="s12">
+					<p>Errors found</p>
+					<ul th:each="error : ${errors}">
+						<li>Field: <span th:text="${error.key}"></span>, error is: <span th:text="${error.value}"></span>
+						</li>
+					</ul>
+				</div>
+			</div>-->
+	</form>
+</div>
+<div class="section">
+	<div class="row">
+		<div class="col s12"><img src="/Costa_rican_frog.jpg" title="Costa rican frog" width="200px"
+		                          class="z-depth-4"/></div>
 	</div>
+</div>
 </div>
 
 

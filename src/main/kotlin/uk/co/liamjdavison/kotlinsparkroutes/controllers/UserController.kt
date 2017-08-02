@@ -45,7 +45,8 @@ class UserController : AbstractController("/users") {
 				if (!errorMap.isEmpty()) {
 					model.put("name", u.name)
 					model.put("age", u.age)
-					request.session().attribute("errors", errorMap)
+//					request.session().attribute("errors", errorMap)
+					flash(request, "errors", errorMap)
 					redirect(controllerHome)
 
 				} else {
