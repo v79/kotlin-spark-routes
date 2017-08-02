@@ -13,11 +13,11 @@ import uk.co.liamjdavison.kotlinsparkroutes.services.users.UserService
  * Controller for users. Responds to requests under the /users path
  */
 @SparkController
-class UserController() : AbstractController("/users") {
+class UserController : AbstractController("/users") {
 
 	lateinit var userService: UserService
-	val model: MutableMap<String, Any> = hashMapOf<String, Any>()
-	val userControllerHome = path + "/"
+//	val model: MutableMap<String, Any> = hashMapOf<String, Any>()
+//	val userControllerHome = path + "/"
 
 	init {
 		// inject userService at this point; any earlier and it can't be overridden in tests (unless I can get lazy injection working?
@@ -40,9 +40,20 @@ class UserController() : AbstractController("/users") {
 
 			post("/add-submit") {
 				val u: User = User(request.queryParams("name"), request.queryParams("age").toInt())
-				logger.info("Submitting user information for user ${u}")
-				userService.addUser(u)
-				redirect(userControllerHome)
+
+				val errorMap = u.validate()
+				if (!errorMap.isEmpty()) {
+					model.put("name", u.name)
+					model.put("age", u.age)
+					request.session().attribute("errors", errorMap)
+					redirect(controllerHome)
+
+				} else {
+					logger.info("Submitting user information for user ${u}")
+					model.clear()
+					userService.addUser(u)
+					redirect(controllerHome)
+				}
 			}
 			get("/delete") {
 				logger.info("Attempting to delete user id " + request.queryParams("userId"))
@@ -50,13 +61,14 @@ class UserController() : AbstractController("/users") {
 				if (userToDelete != null) {
 					userService.deleteUser(userToDelete)
 				}
-				redirect(userControllerHome)
+				redirect(controllerHome)
 			}
 
 			// Ajax paths all go here
 			Spark.path("/ajax/") {
 				get("delete/*") {
-					logger.info("beep called with splat " + request.splat()[0])
+					val model: MutableMap<String, Any> = hashMapOf<String, Any>()
+					logger.info("delete called with splat " + request.splat()[0])
 					val userId: String? = request.splat()[0]
 
 					userId?.let {
@@ -68,6 +80,7 @@ class UserController() : AbstractController("/users") {
 			}
 		}
 	}
+
 
 	private fun getAllUsers(): List<User> {
 		return userService.getAllUsers()

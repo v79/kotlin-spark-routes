@@ -42,15 +42,33 @@
 		<form id="addUser" action="/users/add-submit" method="post" class="col s12">
 			<div class="input-field col s5">
 				<label for="addUser-name">Name</label>
-				<input id="addUser-name" name="name" placeholder="Name" type="text">
+				<input id="addUser-name" name="name" placeholder="Name" type="text" th:value="${name}"
+				       required="required"
+				>
+				<div th:if="${errorMap != null}">
+					<p th:if="${errorMap.get('name')}" th:text="${errorMap.get('name')}">Validation error message for
+						name</p>
+				</div>
 			</div>
 			<div class="input-field col s2">
 				<label for="addUser-age">Age</label>
-				<input id="addUser-age" name="age" placeholder="Age" class="input-field col s3" type="number">
+				<input id="addUser-age" name="age" placeholder="Age" class="input-field col s3" type="number"
+				       th:value="${age}">
+				<div th:if="${errorMap != null}">
+					<p th:if="${errorMap.get('age')}" th:text="${errorMap.get('age')}">Validation error message for
+						age</p>
+				</div>
 			</div>
 			<div class="input-field col s2 pull-s1">
 				<button id="addUser-btn-add" type="submit" class="btn waves-effect waves-light teal darken-1">Add User
 					<i class="material-icons right">add</i></button>
+			</div>
+			<div th:if="${errorMap != null}">
+				<p>Errors found</p>
+				<!--<ul th:each="error : ${errorMap}">
+					<li>Field: <span th:text="${error.key}"></span>, error is: <span th:text="${error.value}"></span>
+					</li>
+				</ul>-->
 			</div>
 		</form>
 	</div>
