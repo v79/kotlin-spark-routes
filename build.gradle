@@ -55,6 +55,7 @@ dependencies {
     compile "org.jetbrains.kotlin:kotlin-stdlib-jre8:$kotlin_version"
     compile "com.sparkjava:spark-kotlin:$spark_kotlin_version"
     compile "org.thymeleaf:thymeleaf:$thymeleaf_version"
+    compile group: 'org.thymeleaf.extras', name: 'thymeleaf-extras-java8time', version: '3.0.0.RELEASE'
     compile "org.reflections:reflections:0.9.11"
     compile "com.github.salomonbrys.kodein:kodein:$kodein_version"
     compile group: 'org.slf4j', name: 'slf4j-simple', version: '1.6.2'

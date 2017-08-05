@@ -9,7 +9,7 @@ import spark.Session
 import spark.kotlin.after
 import spark.kotlin.before
 import spark.kotlin.notFound
-import uk.co.liamjdavison.ThymeleafEngine
+import spark.template.thymeleaf.ThymeleafTemplateEngine
 import uk.co.liamjdavison.kotlinsparkroutes.services.users.InMemoryUserService
 import uk.co.liamjdavison.kotlinsparkroutes.services.users.UserDBService
 import uk.co.liamjdavison.kotlinsparkroutes.services.users.UserService
@@ -24,7 +24,7 @@ abstract class AbstractController(path: String) {
 
 
 	open val logger = LoggerFactory.getLogger(AbstractController::class.java)
-	protected val engine: ThymeleafEngine = ThymeleafEngine()
+	protected val engine: ThymeleafTemplateEngine = ThymeleafTemplateEngine()
 
 	var session: Session? = null
 	open lateinit var path: String
@@ -43,25 +43,15 @@ abstract class AbstractController(path: String) {
 		before {
 			session = request.session(true)
 
-
-			logger.info("BEFORE: model contains:- ")
-			model.entries.forEach {
-				logger.info("\t" + it)
-			}
-
-
 			// update all flash item counts
 			val flashAttr: MutableMap<String, Any>? = request.session().attribute("flash")
 			if (flashAttr != null && flashAttr.isNotEmpty()) {
 				flashAttr.forEach {
-					//					logger.info("Flash key: " + it.key + " -> " + it.value)
 					model.put(it.key, it.value) // store the flashed thing on the model
-//					logger.info("Stored " + it.key + " on model -> " + model.get(it.key))
 					val flashKeyCount: Int? = request.session().attribute(getFlashKeyCountName(it.key))
 					if (flashKeyCount == null) {
 						request.session().attribute(getFlashKeyCountName(it.key), 1)
 					} else {
-						logger.info("Updated count $flashKeyCount to " + (flashKeyCount + 1))
 						request.session().attribute(getFlashKeyCountName(it.key), (flashKeyCount + 1))
 					}
 				}
@@ -74,7 +64,6 @@ abstract class AbstractController(path: String) {
 				flashAttr.forEach {
 					val flashKeyCount: Int? = request.session().attribute(getFlashKeyCountName(it.key))
 					if (flashKeyCount != null && flashKeyCount > FLASH_COUNT_MAX) {
-						logger.info("AFTER: clearing flash for " + it.key)
 						clearFlashForKey(request, it.key)
 						model.remove(it.key)
 					}
@@ -87,7 +76,6 @@ abstract class AbstractController(path: String) {
 	}
 
 	fun flash(request: Request, key: String, value: Any) {
-		//request.session().attribute("errors", errorMap)
 		val keyValueMap: MutableMap<String, Any> = mutableMapOf<String, Any>()
 		keyValueMap.put(key, value)
 		request.session().attribute("flash", keyValueMap)
