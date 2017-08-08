@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<div th:replace="~{fragments/head-imports :: links(pageTitle=${title})}">
+
+</div>
+<body>
+
+
+<nav>
+	<div class="nav-wrapper teal blue-grey darken-2">
+		<a href="#" class="brand-logo right hide-on-med-and-down">Logo</a>
+		<ul id="nav-mobile" class="left hide-on-small">
+			<li><a class="waves-effect btn waves-light modal-trigger" data-target="session">Session</a>
+			<li><a href="/users/">Users</a></li>
+			<li><a href="/validtest/">Validation Tests</a></li>
+		</ul>
+	</div>
+</nav>
+
+
+<div class="container">
+	<div class="row">
+		<div class="col s12"><h2>Validation Tests</h2></div>
+	</div>
+
+
+	<div id="timeFormContainer">
+		<div th:replace="~{fragments/valid-time-form :: form}"/>
+	</div>
+</div>
+
+
+<!-- modals go here -->
+
+<div th:replace="~{fragments/footer :: footer}"></div>
+
+<!--Import jQuery before materialize.js-->
+<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.99.0/js/materialize.min.js"></script>
+
+<script src="/js/init.js"></script>
+
+</body>
+</html>

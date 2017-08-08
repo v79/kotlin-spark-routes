@@ -14,7 +14,35 @@ function openModal(sparkPath, dataDiv, containerDiv) {
         url: sparkPath,
         success: function(data) {
             $(dataDiv).html(data);
-            $(containerDiv).modal('open')
+            $(containerDiv).modal('open');
         }
     })
+}
+
+function validateAndSubmit(validatorPath, formName, containerDiv, actionPath) {
+    var serializedData = $('#' + formName).serialize();
+    console.log(serializedData)
+    // first, post to validator
+    $.ajax({
+        url: validatorPath,
+        method: 'post',
+        data: serializedData,
+        success: function(response, statusText, xhr) {
+            // if valid, move on to next action
+            if(!response) {
+                window.location.href = '/validtest/success'
+//                $.ajax({
+//                    url: actionPath,
+//                    method: 'post',
+//                    data: serializedData,
+//                    success: function(response) {
+//                        // do nothing
+//                    }
+//                });
+            } else {
+                // if in error, form should be re-rendered
+                $('#' + containerDiv).html(response);
+            }
+        }
+    });
 }

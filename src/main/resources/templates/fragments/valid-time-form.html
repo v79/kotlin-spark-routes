@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<form id="timeForm" th:fragment="form">
+	<div class="row">
+		<label for="minutes">Minutes <span th:if="${errors != null}" th:text="${errors.get('minutes')}" class="red-text"></span></label>
+		<input id="minutes" name="minutes" th:value="${minutes}"/>
+		<label for="hours">Hours <span th:if="${errors != null}" th:text="${errors.get('hours')}" class="red-text"></span></label>
+		<input id="hours" name="hours" th:value="${hours}"/>
+		<div class="btn" onclick="validateAndSubmit('ajax/validate','timeForm','timeFormContainer','ajax/submit');">Validate</div>
+	</div>
+
+</form>
+</html>
