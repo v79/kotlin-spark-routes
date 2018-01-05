@@ -67,22 +67,30 @@ class ValidatorController : AbstractController("/validtest") {
 		if (h.isNullOrEmpty()) {
 			errors.put("hours", "Must not be empty")
 		} else {
-			val toInt: Int? = h?.toInt()
-			toInt?.let {
-				if (it < 0 || it > 23) {
-					errors.put("hours", "Hours must be in range 0 to 23")
+			try {
+				val toInt: Int? = h?.toInt()
+				toInt?.let {
+					if (it < 0 || it > 23) {
+						errors.put("hours", "Hours must be in range 0 to 23")
+					}
 				}
+			} catch (nfe: NumberFormatException) {
+				errors.put("hours", "That's not even a number")
 			}
 		}
 
 		if (m.isNullOrEmpty()) {
 			errors.put("minutes", "Must not be empty")
 		} else {
-			val toInt: Int? = m?.toInt()
-			toInt?.let {
-				if (it < 0 || it > 59) {
-					errors.put("minutes", "Minutes must be in range 0 to 59")
+			try {
+				val toInt: Int? = m?.toInt()
+				toInt?.let {
+					if (it < 0 || it > 59) {
+						errors.put("minutes", "Minutes must be in range 0 to 59")
+					}
 				}
+			} catch (nfe: NumberFormatException) {
+				errors.put("hours", "That's not even a number")
 			}
 		}
 
