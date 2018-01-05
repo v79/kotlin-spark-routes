@@ -9,12 +9,12 @@ repositories {
 }
 
 buildscript {
-    ext.kotlin_version = '1.1.3-2'
+    ext.kotlin_version = '1.2.10'
     ext.spark_kotlin_version = '1.0.0-alpha'
     ext.ksparkmvc_version = '0.0.20-SNAPSHOT'
     ext.thymeleaf_version = '3.0.6.RELEASE'
-    ext.kodein_version = '4.0.0'
-    ext.exposed_version = '0.8.5'
+    ext.kodein_version = '4.1.0'
+    ext.exposed_version = '0.9.1'
     repositories {
         mavenLocal()
         mavenCentral()

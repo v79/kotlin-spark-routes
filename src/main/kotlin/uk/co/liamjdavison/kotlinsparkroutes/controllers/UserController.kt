@@ -3,6 +3,7 @@ package uk.co.liamjdavison.kotlinsparkroutes.controllers
 import com.github.salomonbrys.kodein.instance
 import spark.ModelAndView
 import spark.Spark
+import spark.kotlin.delete
 import spark.kotlin.get
 import spark.kotlin.post
 import uk.co.liamjdavison.kotlinsparkroutes.annotations.SparkController
@@ -67,7 +68,7 @@ class UserController : AbstractController("/users") {
 
 			// Ajax paths all go here
 			Spark.path("/ajax/") {
-				get("delete/*") {
+				delete("delete/*") {
 					val model: MutableMap<String, Any> = hashMapOf<String, Any>()
 					logger.info("delete called with splat " + request.splat()[0])
 					val userId: String? = request.splat()[0]

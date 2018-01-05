@@ -8,15 +8,27 @@ $(document).ready(function() {
 
 }); // end of document ready
 
-// generic function to open a modal dialog. Specify the controller path which will supply the view, and the HTML divs to update
-function openModal(sparkPath, dataDiv, containerDiv) {
-    $.ajax({
-        url: sparkPath,
-        success: function(data) {
-            $(dataDiv).html(data);
-            $(containerDiv).modal('open');
-        }
-    })
+// generic function to open a modal dialog. Specify the controller path which will supply the view, and the HTML divs to update. Add del=true if you wish to make a DELETE request
+function openModal(sparkPath, dataDiv, containerDiv, del = false) {
+    if(del) {
+        $.ajax({
+                url: sparkPath,
+                type: 'DELETE',
+                success: function(data) {
+                    $(dataDiv).html(data);
+                    $(containerDiv).modal('open');
+                }
+            })
+    } else {
+        $.ajax({
+            url: sparkPath,
+            success: function(data) {
+                $(dataDiv).html(data);
+                $(containerDiv).modal('open');
+            }
+        })
+    }
+
 }
 
 function validateAndSubmit(validatorPath, formName, containerDiv, actionPath) {

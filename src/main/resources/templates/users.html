@@ -30,7 +30,8 @@
 					<a class="secondary-content"
 					   th:onclick="'openModal(\'ajax\/delete\/' + ${u.id} + '\',
 					    \'#userToDelete\',
-					    \'#confirmDeleteContainer\'
+					    \'#confirmDeleteContainer\',
+					    true
 					   );'"><i
 							class="material-icons">delete</i></a>
 				</div>
@@ -78,8 +79,6 @@
 		                          class="z-depth-4"/></div>
 	</div>
 </div>
-</div>
-
 
 <!-- modals go here -->
 <div id="session" class="modal">
