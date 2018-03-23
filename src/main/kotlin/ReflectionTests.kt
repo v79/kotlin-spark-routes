@@ -1,8 +1,15 @@
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 import kotlin.reflect.KClass
 import kotlin.reflect.KParameter
-import kotlin.reflect.full.declaredMemberProperties
-import kotlin.reflect.full.primaryConstructor
+import kotlin.reflect.full.*
 import kotlin.reflect.jvm.jvmErasure
+
+
+@Retention(AnnotationRetention.RUNTIME)
+@Target(AnnotationTarget.VALUE_PARAMETER)
+annotation class SparkConverter(val converterClass: KClass<out Converter>)
+
 
 typealias IsValid = Pair<Boolean, Map<String, String>>
 
@@ -20,7 +27,28 @@ class FakeRequest(val params: Map<String, String>) {
 	}
 }
 
-data class MyTime(val hours: Int, val minutes: Int) : Valid {
+interface Converter {
+	fun convert(from: String): Any?
+}
+
+class MyTimeIntConverter : Converter {
+	override fun convert(hoursString: String): Int {
+		return hoursString.toInt()
+	}
+}
+
+class LocalDateConverter : Converter {
+	override fun convert(from: String): LocalDate {
+		val dateTimeFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy")
+		return LocalDate.parse(from, dateTimeFormatter)
+	}
+}
+
+data class PersonBirthday(val name: String, @SparkConverter(converterClass = LocalDateConverter::class) val dob: LocalDate)
+
+data class MyTime(@SparkConverter(converterClass = MyTimeIntConverter::class) val hours: Int,
+				  @SparkConverter(converterClass = MyTimeIntConverter::class) val minutes: Int) : Valid {
+
 	override fun valid(): IsValid {
 		val errors = mutableMapOf<String, String>()
 		var v = true
@@ -73,18 +101,54 @@ class Form(val req: FakeRequest, val formClass: KClass<*>) {
 		val consParams: MutableMap<KParameter, Any?> = mutableMapOf()
 		if (primaryConstructor != null) {
 			for (consP in primaryConstructor.parameters) {
+				val inputValue: String = req.params.get(consP.name) ?: "" // I don't ever expect a null here
 				println("\t primaryConstructor parameter: ${consP} with type jvmErasure ${consP.type.jvmErasure}")
+				println("\t annotations are: " + consP.annotations)
 
-				when (consP.type.jvmErasure.qualifiedName) {
+				var finalValue: Any? = null
+
+				val sparkConverterAnnotation = consP.findAnnotation<SparkConverter>()
+				if (sparkConverterAnnotation != null) {
+					println("\t\t my converter class: " + sparkConverterAnnotation.converterClass)
+					val converterClass = Class.forName(sparkConverterAnnotation.converterClass.qualifiedName).newInstance().javaClass.kotlin
+					if (converterClass != null) {
+						println("is a converter " + converterClass)
+						val converterFunction = converterClass.declaredMemberFunctions.find { it.name.equals("convert") }
+						if (converterFunction != null) {
+							println("\t\t converterClass ${converterClass}")
+							println("\t\t converter function ${converterFunction}")
+
+							println("\t\t function parameters; ${converterFunction.parameters}")
+
+							val converterParams: MutableMap<KParameter, String> = mutableMapOf()
+							converterFunction.parameters.forEach {
+								println("\t\t\tconverterFunction param: $it")
+							}
+//							val firstKParameter = converterFunction.parameters.get(1)
+//							finalValue = converterFunction.callBy(converterParams)
+							finalValue = converterFunction.call(converterClass.createInstance(), inputValue)
+						}
+					}
+
+				} else {
+					// we don't have a converter, so let's squash the String into whatever we've got
+					finalValue = inputValue
+				}
+
+
+				/*when (consP.type.jvmErasure.qualifiedName) {
 					"kotlin.String" -> {
 						println("do string thing")
-						consParams.put(consP, req.params.get(consP.name))
+//						consParams.put(consP, req.params.get(consP.name))
 					}
 					"kotlin.Int" -> {
 						println("do int thing")
-						consParams.put(consP, req.params.get(consP.name)?.toInt())
+//						consParams.put(consP, req.params.get(consP.name)?.toInt())
 					}
-				}
+				}*/
+
+				println("our final value is $finalValue")
+				consParams.put(consP, finalValue)
 
 //
 
@@ -155,6 +219,18 @@ fun main(args: Array<String>) {
 		val myTimeForm = Form(myFakeRequest, MyTime::class)
 
 		println("myTimeForm is valid: ${myTimeForm.valid}")
+		println("-------------------------------------------")
+
+		val birthdayParam = "name" to "Liam"
+		val birthdayDateParam = "dob" to "06/04/1979"
+		paramMap.clear()
+		paramMap.put(birthdayParam.first, birthdayParam.second)
+		paramMap.put(birthdayDateParam.first, birthdayDateParam.second)
+		println("Constructing my fake birthday request with ${paramMap}")
+		val myFakeBirthdayRequest = FakeRequest(paramMap)
+		val myBirthdayForm = Form(myFakeBirthdayRequest, PersonBirthday::class)
+
+		println("-------------------------------------------")
 	}
 
 	val userParamMap = mutableMapOf(Pair("name", "liam"), Pair("email", "liam@davison.com"))
